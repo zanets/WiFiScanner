@@ -1,6 +1,10 @@
 import Darwin
 import Foundation
 
+func beauty(raw: String, maxLen: Int) -> String {
+  return raw.padding(toLength: maxLen, withPad: " ", startingAt: 0)
+}
+
 // global settings
 var update_interval: UInt32 = 0
 
@@ -29,18 +33,18 @@ repeat {
   wifis.sort(by: {$0.ssid < $1.ssid})
   
   // output
-  print("--------------------------------------")
   for wifi in wifis {
-    print(wifi.ssid, "(", wifi.bssid, ")")    
-    print("\t", wifi.modes, terminator: "")    
-    print("\t", wifi.channel, terminator: "")    
-    print("\t", wifi.channel_band, terminator: "")    
-    print("\t", wifi.channel_bandwidth, terminator: "")
-    print("\t", wifi.rssi, "dBm", terminator: "")
-    print("\t", wifi.noise, " dBm", terminator: "")
-    print("\t", wifi.security)  
+    print()
+    print( wifi.ssid, "(", wifi.bssid, ")" )    
+    print( "\\ ", terminator: "" ) 
+    print( beauty(raw: wifi.modes, maxLen: 10), terminator: "")    
+    print( beauty(raw: wifi.channel, maxLen: 10), terminator: "")    
+    print( beauty(raw: wifi.channel_band, maxLen: 10), terminator: "")    
+    print( beauty(raw: wifi.channel_bandwidth, maxLen: 10), terminator: "")
+    print( beauty(raw: wifi.rssi, maxLen: 10), terminator: "")
+    print( beauty(raw: wifi.noise, maxLen: 10), terminator: "")
+    print( beauty(raw: wifi.security, maxLen: 100) )  
   }
-  print("--------------------------------------")
 
   sleep(update_interval)
 } while update_interval > 0

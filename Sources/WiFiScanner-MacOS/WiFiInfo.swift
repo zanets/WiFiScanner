@@ -9,7 +9,7 @@ class WiFiInfo {
   // a, ac, b, g, n
   var modes: String
   // 2.4G: 1-14, 5G: TL;DR
-  var channel: Int
+  var channel: String
   // 2.4, 5GHz
   var channel_band: String
   // 20, 40, 80, 160MHz
@@ -17,20 +17,20 @@ class WiFiInfo {
   // WPA...
   var security: String
   // dBm
-  var noise: Int
+  var noise: String
   // dBm
-  var rssi: Int
+  var rssi: String
 
   init (network: CWNetwork) {
     self.ssid              = network.ssid ?? "Unknown SSID"
     self.bssid             = network.bssid ?? "Unknown BSSID"
-    self.channel           = network.wlanChannel.channelNumber
+    self.channel           = String(network.wlanChannel.channelNumber)
     self.channel_band      = gen_channel_band(cw_channel_band: network.wlanChannel.channelBand)
     self.modes             = gen_modes(network: network)
     self.channel_bandwidth = gen_channel_bandwidth(cw_channel_width: network.wlanChannel.channelWidth)
     self.security          = gen_security(network: network)
-    self.noise             = network.noiseMeasurement
-    self.rssi              = network.rssiValue
+    self.noise             = String(network.noiseMeasurement) + " dBm"
+    self.rssi              = String(network.rssiValue) + " dBm"
   }
 }
 
