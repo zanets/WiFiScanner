@@ -4,6 +4,8 @@ class WiFiInfo {
 
   // Do you want my password?
   var ssid: String
+  // mac address
+  var bssid: String
   // a, ac, b, g, n
   var modes: String
   // 2.4G: 1-14, 5G: TL;DR
@@ -16,15 +18,19 @@ class WiFiInfo {
   var security: String
   // dBm
   var noise: Int
+  // dBm
+  var rssi: Int
 
   init (network: CWNetwork) {
     self.ssid              = network.ssid ?? "Unknown SSID"
+    self.bssid             = network.bssid ?? "Unknown BSSID"
     self.channel           = network.wlanChannel.channelNumber
     self.channel_band      = gen_channel_band(cw_channel_band: network.wlanChannel.channelBand)
     self.modes             = gen_modes(network: network)
     self.channel_bandwidth = gen_channel_bandwidth(cw_channel_width: network.wlanChannel.channelWidth)
     self.security          = gen_security(network: network)
     self.noise             = network.noiseMeasurement
+    self.rssi              = network.rssiValue
   }
 }
 

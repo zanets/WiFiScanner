@@ -29,17 +29,18 @@ repeat {
   wifis.sort(by: {$0.ssid < $1.ssid})
   
   // output
-  print("SSID\t\t\tModes\tChannel\tBand\tBandwidth")
-  print("-----------------------------------------")
+  print("--------------------------------------")
   for wifi in wifis {
-    print(wifi.ssid, terminator: "")    
+    print(wifi.ssid, "(", wifi.bssid, ")")    
     print("\t", wifi.modes, terminator: "")    
     print("\t", wifi.channel, terminator: "")    
     print("\t", wifi.channel_band, terminator: "")    
     print("\t", wifi.channel_bandwidth, terminator: "")
-    print("\t", wifi.security, terminator: "")  
-    print("\t", wifi.noise, " dBm")
+    print("\t", wifi.rssi, "dBm", terminator: "")
+    print("\t", wifi.noise, " dBm", terminator: "")
+    print("\t", wifi.security)  
   }
+  print("--------------------------------------")
 
   sleep(update_interval)
 } while update_interval > 0
