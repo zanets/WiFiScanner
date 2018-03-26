@@ -12,6 +12,10 @@ class WiFiInfo {
   var channel_band: String
   // 20, 40, 80, 160MHz
   var channel_bandwidth: String
+  // WPA...
+  var security: String
+  // dBm
+  var noise: Int
 
   init (network: CWNetwork) {
     self.ssid              = network.ssid ?? "Unknown SSID"
@@ -19,6 +23,8 @@ class WiFiInfo {
     self.channel_band      = gen_channel_band(cw_channel_band: network.wlanChannel.channelBand)
     self.modes             = gen_modes(network: network)
     self.channel_bandwidth = gen_channel_bandwidth(cw_channel_width: network.wlanChannel.channelWidth)
+    self.security          = gen_security(network: network)
+    self.noise             = network.noiseMeasurement
   }
 }
 
@@ -37,28 +43,28 @@ func gen_channel_bandwidth (cw_channel_width: CWChannelWidth) -> String {
 }
 
 func gen_modes (network: CWNetwork) -> String {
-  var modes = ""
+  var res = ""
 
   if network.supportsPHYMode(CWPHYMode.modeNone) {
-    return modes
+    res += "None,"
   }
   if network.supportsPHYMode(CWPHYMode.mode11a) {
-    modes += "a,"
+    res += "a,"
   }
   if network.supportsPHYMode(CWPHYMode.mode11ac) {
-    modes += "ac,"
+    res += "ac,"
   }
   if network.supportsPHYMode(CWPHYMode.mode11b) {
-    modes += "b,"
+    res += "b,"
   }
   if network.supportsPHYMode(CWPHYMode.mode11g) {
-    modes += "g,"
+    res += "g,"
   }
   if network.supportsPHYMode(CWPHYMode.mode11n) {
-    modes += "n,"
+    res += "n,"
   }
 
-  return modes
+  return res
 }
 
 func gen_channel_band (cw_channel_band: CWChannelBand) -> String {
@@ -69,4 +75,48 @@ func gen_channel_band (cw_channel_band: CWChannelBand) -> String {
   } else {
     return "Unknown Channel Band"
   }
+}
+
+func gen_security (network: CWNetwork) -> String {
+  var res = ""
+
+  // OMG so much...
+  if network.supportsSecurity(CWSecurity.none) {
+    res += "None/"
+  }
+  if network.supportsSecurity(CWSecurity.unknown) {
+    res += "Unknown/"
+  }
+  if network.supportsSecurity(CWSecurity.dynamicWEP) {
+    res += "Dynamic WEP/"
+  }
+  if network.supportsSecurity(CWSecurity.enterprise) {
+    res += "Enterprise/"
+  }
+  if network.supportsSecurity(CWSecurity.personal) {
+    res += "Personal/"
+  }
+  if network.supportsSecurity(CWSecurity.WEP) {
+    res += "WEP/"
+  }
+  if network.supportsSecurity(CWSecurity.wpa2Enterprise) {
+    res += "WPA2 Enterprise/"
+  }
+  if network.supportsSecurity(CWSecurity.wpa2Personal) {
+    res += "WPA2 Personal/"
+  }
+  if network.supportsSecurity(CWSecurity.wpaEnterprise) {
+    res += "WPA Enterprise/"
+  }
+  if network.supportsSecurity(CWSecurity.wpaEnterpriseMixed) {
+    res += "WPA Enterprise Mixed/"
+  }
+  if network.supportsSecurity(CWSecurity.wpaPersonal) {
+    res += "WPA Personal/"
+  }
+  if network.supportsSecurity(CWSecurity.wpaPersonalMixed) {
+    res += "WPA Personal Mixed/"
+  }
+
+  return res
 }

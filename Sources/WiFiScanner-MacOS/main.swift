@@ -36,7 +36,9 @@ repeat {
     print("\t", wifi.modes, terminator: "")    
     print("\t", wifi.channel, terminator: "")    
     print("\t", wifi.channel_band, terminator: "")    
-    print("\t", wifi.channel_bandwidth, "\r")  
+    print("\t", wifi.channel_bandwidth, terminator: "")
+    print("\t", wifi.security, terminator: "")  
+    print("\t", wifi.noise, " dBm")
   }
 
   sleep(update_interval)
