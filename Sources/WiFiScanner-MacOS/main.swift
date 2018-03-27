@@ -1,9 +1,6 @@
 import Darwin
 import Foundation
-
-func beauty(raw: String, maxLen: Int) -> String {
-  return raw.padding(toLength: maxLen, withPad: " ", startingAt: 0)
-}
+import SwiftyTextTable
 
 // global settings
 var update_interval: UInt32 = 0
@@ -22,6 +19,14 @@ for argu in argus {
 }
 let scanner = WiFiScanner()
 
+// create text table
+let titles = ["SSID", "BSSID", "PHY Mode", "Channel", "Channel Band", "Bandwidth", "RSSI", "Noise", "Security"]
+var cols = [TextTableColumn]()
+for i in 0...titles.count-1 {
+  cols.append(TextTableColumn(header: titles[i]))
+}
+var table = TextTable(columns: cols)
+
 // do scan
 repeat {
   guard var wifis = scanner.scan() else {
@@ -32,20 +37,21 @@ repeat {
   // sort by ssid
   wifis.sort(by: {$0.ssid < $1.ssid})
   
-  // output
   for wifi in wifis {
-    print()
-    print( wifi.ssid, "(", wifi.bssid, ")" )    
-    print( "\\ ", terminator: "" ) 
-    print( beauty(raw: wifi.modes, maxLen: 10), terminator: "")    
-    print( beauty(raw: wifi.channel, maxLen: 10), terminator: "")    
-    print( beauty(raw: wifi.channel_band, maxLen: 10), terminator: "")    
-    print( beauty(raw: wifi.channel_bandwidth, maxLen: 10), terminator: "")
-    print( beauty(raw: wifi.rssi, maxLen: 10), terminator: "")
-    print( beauty(raw: wifi.noise, maxLen: 10), terminator: "")
-    print( beauty(raw: wifi.security, maxLen: 100) )  
+    table.addRow(values: [
+      wifi.ssid,
+      wifi.bssid,
+      wifi.modes,
+      wifi.channel,
+      wifi.channel_band,
+      wifi.channel_bandwidth,
+      wifi.rssi,
+      wifi.noise,
+      wifi.security
+    ])
   }
-
+  print(table.render())
+  wifis.removeAll()
   sleep(update_interval)
 } while update_interval > 0
 
