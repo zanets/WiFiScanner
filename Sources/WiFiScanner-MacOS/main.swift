@@ -25,7 +25,6 @@ var cols = [TextTableColumn]()
 for i in 0...titles.count-1 {
   cols.append(TextTableColumn(header: titles[i]))
 }
-var table = TextTable(columns: cols)
 
 // do scan
 repeat {
@@ -33,10 +32,11 @@ repeat {
     print("Process terminatied.");
     exit(-1)
   }
-  
+
   // sort by ssid
   wifis.sort(by: {$0.ssid < $1.ssid})
-  
+
+  var table = TextTable(columns: cols)
   for wifi in wifis {
     table.addRow(values: [
       wifi.ssid,
