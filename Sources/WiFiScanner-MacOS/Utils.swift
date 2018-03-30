@@ -76,7 +76,7 @@ func getSettings ( argus: [(name: String, value: String)] ) -> Settings{
 
 func usage() {
 	print("Usage: WiFiScanner-MacOS [OPTION]")
-	print("Scan wireless networks and view WLANSSID, BSSID, PHY Mode, Channel, Channel Band, Bandwidth, RSSI, Noise and Security")
+	print("Scan wireless networks and view WLAN SSID, BSSID, PHY Mode, Channel, Channel Band, Bandwidth, RSSI, Noise and Security")
 	print()
 	print("--help, -h            This usage")
 	print("--updateInterval=NUM  Process wait for NUM seconds for every scan")
