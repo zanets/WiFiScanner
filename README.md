@@ -1,21 +1,26 @@
 # WiFiScanner-MacOS
 
-Command Line WiFi Scanner for MacOS (10.13)
+Scan wireless networks and view WLAN SSID, BSSID, PHY Mode, Channel, Channel Band, Bandwidth, RSSI, Noise and Security
 ![demo](https://raw.githubusercontent.com/darg20127/WiFiScanner-MacOS/master/Demo/demo.jpeg)
 
-### Supports
-- SSID
-- PHY mode
-- BSSID
-- Channel
-- Channel band
-- Channel bandwidth
-- Security
-- Noise
-- RSSI
+### USAGE
+```
+Usage: WiFiScanner-MacOS [OPTION]
+Scan wireless networks and view WLAN SSID, BSSID, PHY Mode, Channel, Channel Band, Bandwidth, RSSI, Noise and Security
+
+--help, -h            This usage
+--updateInterval=NUM  Process wait for NUM seconds for every scan
+--updateTimes=NUM     Process will scan NUM times
+
+About updateInterval and updateTimes:
+If updateInterval is not given, process run once.
+If updateInterval is given but updateTimes is not, process run forever.
+If updateInterval and updateTimes are given, process updateTimes times.
+``````
 
 ### TODO
 - [ ] Refresh output
 - [ ] Filter 
-- [ ] Better output format
+
+
 
