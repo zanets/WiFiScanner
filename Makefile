@@ -11,7 +11,7 @@ compile-release:
 	swift build -c release -Xswiftc -static-stdlib
 
 compile-debug:
-	swift build
+	swift build -c debug
 
 clean:
 	swift package clean

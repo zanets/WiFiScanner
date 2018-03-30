@@ -34,7 +34,6 @@ for i in 0...titles.count-1 {
 while updateTimes > 0 {
 
 	autoreleasepool{
-
 		guard var wifis = scanner.scan() else {
 			print("Process terminatied.");
 			exit(-1)
@@ -44,6 +43,7 @@ while updateTimes > 0 {
 		wifis.sort(by: {$0.ssid < $1.ssid})
 
 		var table = TextTable(columns: cols)
+
 		for wifi in wifis {
 			table.addRow(values: [
 				wifi.ssid,
@@ -57,17 +57,10 @@ while updateTimes > 0 {
 				wifi.security
 			])
 		}
-
-		if updateTimes != Int.max {
-			updateTimes -= 1
-		}
-
 		print(table.render())
-		sleep(UInt32(updateInterval))
-
 	}
-
+	if updateTimes != Int.max {
+		updateTimes -= 1
+	}
+	sleep(UInt32(updateInterval))
 }
-
-
-
