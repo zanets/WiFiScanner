@@ -1,3 +1,6 @@
+BUILD_PATH=.build/x86_64-apple-macosx10.10/release/WiFiScanner-MacOS
+NAME=WiFiScanner
+
 default: compile
 
 compile: compile-release compile-debug
@@ -15,6 +18,5 @@ cleanall:
 	swift package reset
 
 install:
+	cp ${BUILD_PATH} ./${NAME}
 	
-test:
-
