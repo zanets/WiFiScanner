@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
   name: "WiFiScanner-MacOS",
   dependencies: [
-    .package(url: "https://github.com/scottrhoyt/SwiftyTextTable.git", from: "0.5.0")
+    .package(url: "https://github.com/scottrhoyt/SwiftyTextTable.git", from: "0.8.0")
   ],
   targets: [
     .target(

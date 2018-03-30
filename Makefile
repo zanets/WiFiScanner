@@ -1,15 +1,20 @@
 default: compile
 
-compile:
+compile: compile-release compile-debug
+
+compile-release:
+	swift build -c release -Xswiftc -static-stdlib
+
+compile-debug:
 	swift build
 
 clean:
-	swift clean
+	swift package clean
 
-test:
-	.build/x86_64-apple-macosx10.10/debug/WiFiScanner-MacOS
+cleanall:
+	swift package reset
 
-run:
-	.build/x86_64-apple-macosx10.10/debug/WiFiScanner-MacOS --interval=10
+install:
 	
+test:
 

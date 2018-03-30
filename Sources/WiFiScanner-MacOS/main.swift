@@ -2,56 +2,59 @@ import Darwin
 import Foundation
 import SwiftyTextTable
 
-// global settings
-var update_interval: UInt32 = 0
-
-// parse arguments and init scanner
-let argus = getopt_long(argus: CommandLine.arguments)
-for argu in argus {
-  if argu.name == "interval" {
-    let input = UInt32(argu.value) ?? 0
-    guard input >= 5 else {
-      print("Parse arguments error: intreval should be >= 5 but get ", argu.value)
-      continue
-    }
-    update_interval = input
-  }
-}
+let Sets = getSettings( argus: getopt_long(argus: Array(CommandLine.arguments.dropFirst())))
 let scanner = WiFiScanner()
+
+// if updateInterval doesnt set, process run once.
+// if updateInterval set but updateTimes not set, process run forever.
+// if updateInterval set and also updateTimes, process run updateTimes times.
+var updateInterval = Sets.updateInterval
+var updateTimes = Sets.updateTimes
+
+if ( updateInterval == ARGUMENT_NOT_SET_INT ) {
+	updateInterval = 0
+	updateTimes = 1
+} else if ( updateTimes == ARGUMENT_NOT_SET_INT ) {
+	updateTimes = Int.max 
+}
 
 // create text table
 let titles = ["SSID", "BSSID", "PHY Mode", "Channel", "Channel Band", "Bandwidth", "RSSI", "Noise", "Security"]
 var cols = [TextTableColumn]()
 for i in 0...titles.count-1 {
-  cols.append(TextTableColumn(header: titles[i]))
+	cols.append(TextTableColumn(header: titles[i]))
 }
 
 // do scan
-repeat {
-  guard var wifis = scanner.scan() else {
-    print("Process terminatied.");
-    exit(-1)
-  }
+while updateTimes > 0 {
+	guard var wifis = scanner.scan() else {
+		print("Process terminatied.");
+		exit(-1)
+	}
 
-  // sort by ssid
-  wifis.sort(by: {$0.ssid < $1.ssid})
+	// sort by ssid
+	wifis.sort(by: {$0.ssid < $1.ssid})
 
-  var table = TextTable(columns: cols)
-  for wifi in wifis {
-    table.addRow(values: [
-      wifi.ssid,
-      wifi.bssid,
-      wifi.modes,
-      wifi.channel,
-      wifi.channel_band,
-      wifi.channel_bandwidth,
-      wifi.rssi,
-      wifi.noise,
-      wifi.security
-    ])
-  }
-  print(table.render())
-  wifis.removeAll()
-  sleep(update_interval)
-} while update_interval > 0
+	var table = TextTable(columns: cols)
+	for wifi in wifis {
+		table.addRow(values: [
+			wifi.ssid,
+			wifi.bssid,
+			wifi.modes,
+			wifi.channel,
+			wifi.channel_band,
+			wifi.channel_bandwidth,
+			wifi.rssi,
+			wifi.noise,
+			wifi.security
+		])
+	}
+
+	if updateTimes != Int.max {
+		updateTimes -= 1
+	}
+
+	print(table.render())
+	sleep(UInt32(updateInterval))
+}
 
