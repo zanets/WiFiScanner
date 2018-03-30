@@ -11,12 +11,17 @@ let scanner = WiFiScanner()
 var updateInterval = Sets.updateInterval
 var updateTimes = Sets.updateTimes
 
+#if RELEASE
 if ( updateInterval == ARGUMENT_NOT_SET_INT ) {
 	updateInterval = 0
 	updateTimes = 1
 } else if ( updateTimes == ARGUMENT_NOT_SET_INT ) {
 	updateTimes = Int.max 
 }
+#else
+updateInterval = 5
+updateTimes = Int.max
+#endif
 
 // create text table
 let titles = ["SSID", "BSSID", "PHY Mode", "Channel", "Channel Band", "Bandwidth", "RSSI", "Noise", "Security"]
@@ -27,34 +32,42 @@ for i in 0...titles.count-1 {
 
 // do scan
 while updateTimes > 0 {
-	guard var wifis = scanner.scan() else {
-		print("Process terminatied.");
-		exit(-1)
+
+	autoreleasepool{
+
+		guard var wifis = scanner.scan() else {
+			print("Process terminatied.");
+			exit(-1)
+		}
+
+		// sort by ssid
+		wifis.sort(by: {$0.ssid < $1.ssid})
+
+		var table = TextTable(columns: cols)
+		for wifi in wifis {
+			table.addRow(values: [
+				wifi.ssid,
+				wifi.bssid,
+				wifi.modes,
+				wifi.channel,
+				wifi.channel_band,
+				wifi.channel_bandwidth,
+				wifi.rssi,
+				wifi.noise,
+				wifi.security
+			])
+		}
+
+		if updateTimes != Int.max {
+			updateTimes -= 1
+		}
+
+		print(table.render())
+		sleep(UInt32(updateInterval))
+
 	}
 
-	// sort by ssid
-	wifis.sort(by: {$0.ssid < $1.ssid})
-
-	var table = TextTable(columns: cols)
-	for wifi in wifis {
-		table.addRow(values: [
-			wifi.ssid,
-			wifi.bssid,
-			wifi.modes,
-			wifi.channel,
-			wifi.channel_band,
-			wifi.channel_bandwidth,
-			wifi.rssi,
-			wifi.noise,
-			wifi.security
-		])
-	}
-
-	if updateTimes != Int.max {
-		updateTimes -= 1
-	}
-
-	print(table.render())
-	sleep(UInt32(updateInterval))
 }
+
+
 
