@@ -1,22 +1,19 @@
 import CoreWLAN
 
-struct WiFiScanner {
+class WiFiScanner {
 	let client: CWWiFiClient = CWWiFiClient.shared()
-
-	func getInterface () -> CWInterface? {
-		guard let interface = self.client.interface() else {
-			print("Fail to get WiFi interface.")
-			return nil
-		}
-		return interface
-	}
+    var interface: CWInterface
+    
+    init?() {
+        guard let interface = self.client.interface() else {
+            print("Fail to get WiFi interface.")
+            return nil
+        }
+        self.interface = interface
+    }
 
 	func scan (name: String? = nil) -> Array<WiFiInfo>? {
-		guard let interface = self.getInterface() else {
-			return nil
-		}
-
-		if let networks = try? interface.scanForNetworks(withName: name) {
+		if let networks = try? self.interface.scanForNetworks(withName: name) {
 			var infos = [WiFiInfo]()
 			for network in networks {
 				infos.append( WiFiInfo(network: network) )
