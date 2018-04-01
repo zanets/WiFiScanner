@@ -89,7 +89,7 @@ func usage() {
 	print("--help, -h            This usage")
 	print("--updateInterval=NUM  Process wait for NUM seconds for every scan")
 	print("--updateTimes=NUM     Process will scan NUM times")
-	print("--ssid=NAME     Process will try to find wifi named NAME")
+	print("--ssid=NAME           Process will try to find wifi named NAME")
 	print("\nAbout updateInterval and updateTimes:")
 	print("If updateInterval is not given, process run once.")
 	print("If updateInterval is given but updateTimes is not, process run forever.")
