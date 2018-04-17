@@ -17,17 +17,12 @@ var updateTimes = Sets.updateTimes
 var ssid: String? = Sets.findSSID
 var fssid: String? = Sets.findFSSID
 
-#if RELEASE
 if ( updateInterval == ARGUMENT_NOT_SET_INT ) {
 	updateInterval = 0
 	updateTimes = 1
 } else if ( updateTimes == ARGUMENT_NOT_SET_INT ) {
 	updateTimes = Int.max 
 }
-#else
-updateInterval = 5
-updateTimes = Int.max
-#endif
 
 // create text table
 var cols = [TextTableColumn]()
