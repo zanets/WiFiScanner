@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SwiftyTextTable",
+        "repositoryURL": "https://github.com/scottrhoyt/SwiftyTextTable.git",
+        "state": {
+          "branch": null,
+          "revision": "89728970c0a244c43f29c4155a1b1dc20b3c4633",
+          "version": "0.8.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

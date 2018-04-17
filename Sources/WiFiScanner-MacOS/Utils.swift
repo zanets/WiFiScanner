@@ -10,6 +10,7 @@ struct Settings {
 	var sortBy: String = "SSID"
 	var sortOrder: String = ""
 	var findSSID: String? = nil
+	var findFSSID: String? = nil
 }
 
 func getopt_long (argus: [String]) -> [(name: String, value: String)] {
@@ -74,6 +75,13 @@ func getSettings ( argus: [(name: String, value: String)] ) -> Settings{
 				exit(-1)
 			}
 			Sets.findSSID = input
+		} else if argu.name == "fssid" {
+			let input = argu.value
+			guard input != "" else {
+				print("Arguments error: fssid require input but get \(argu.value)")
+				exit(-1)
+			}
+			Sets.findFSSID = input
 		} else if argu.name == "help" || argu.name == "h" {
 			usage()
 			exit(0)
@@ -89,7 +97,8 @@ func usage() {
 	print("--help, -h            This usage")
 	print("--updateInterval=NUM  Process wait for NUM seconds for every scan")
 	print("--updateTimes=NUM     Process will scan NUM times")
-	print("--ssid=NAME           Process will try to find wifi named NAME")
+	print("--ssid=NAME           Process will try to find wifi whose SSID is NAME")
+	print("--fssid=NAME          Porcess will try to find wifi that contains NAME in their SSID.")
 	print("\nAbout updateInterval and updateTimes:")
 	print("If updateInterval is not given, process run once.")
 	print("If updateInterval is given but updateTimes is not, process run forever.")

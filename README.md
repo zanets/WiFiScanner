@@ -11,7 +11,8 @@ Scan wireless networks and view WLAN SSID, BSSID, PHY Mode, Channel, Channel Ban
 --help, -h            This usage
 --updateInterval=NUM  Process wait for NUM seconds for every scan
 --updateTimes=NUM     Process will scan NUM times
---ssid=NAME           Process will try to find wifi named NAME
+--ssid=NAME           Process will try to find wifi whose SSID is NAME
+--fssid=NAME          Porcess will try to find wifi that contains NAME in their SSID.
 
 About updateInterval and updateTimes:
 If updateInterval is not given, process run once.

@@ -15,6 +15,7 @@ guard let scanner = WiFiScanner() else {
 var updateInterval = Sets.updateInterval
 var updateTimes = Sets.updateTimes
 var ssid: String? = Sets.findSSID
+var fssid: String? = Sets.findFSSID
 
 #if RELEASE
 if ( updateInterval == ARGUMENT_NOT_SET_INT ) {
@@ -49,6 +50,9 @@ while updateTimes > 0 {
 		wifis.sort(by: {$0.ssid < $1.ssid})
 
 		for wifi in wifis {
+			if fssid != nil && wifi.ssid.range(of: fssid!) == nil {
+				continue
+			}
 			table.addRow(values: [
 				wifi.ssid,
 				wifi.bssid,
