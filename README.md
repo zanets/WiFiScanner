@@ -1,6 +1,5 @@
-# WiFiScanner-MacOS
+# WiFiScanner
 
-Scan wireless networks and view WLAN SSID, BSSID, PHY Mode, Channel, Channel Band, Bandwidth, RSSI, Noise and Security
 ![demo](https://raw.githubusercontent.com/darg20127/WiFiScanner-MacOS/master/Demo/demo.jpeg)
 
 ### USAGE
