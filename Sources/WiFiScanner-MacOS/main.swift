@@ -18,8 +18,13 @@ var ssid: String? = Sets.findSSID
 var fssid: String? = Sets.findFSSID
 
 if ( updateInterval == ARGUMENT_NOT_SET_INT ) {
+#if DEBUG
+	updateInterval = 5
+	updateTimes = Int.max
+#else
 	updateInterval = 0
 	updateTimes = 1
+#endif
 } else if ( updateTimes == ARGUMENT_NOT_SET_INT ) {
 	updateTimes = Int.max 
 }
