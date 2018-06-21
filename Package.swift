@@ -4,13 +4,13 @@
 import PackageDescription
 
 let package = Package(
-  name: "WiFiScanner-MacOS",
+  name: "WiFiScanner",
   dependencies: [
     .package(url: "https://github.com/scottrhoyt/SwiftyTextTable.git", from: "0.8.0")
   ],
   targets: [
     .target(
-      name: "WiFiScanner-MacOS",
+      name: "WiFiScanner",
       dependencies: [
         "SwiftyTextTable"
       ]),

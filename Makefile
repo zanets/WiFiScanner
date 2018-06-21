@@ -1,4 +1,4 @@
-BUILD_PATH=.build/x86_64-apple-macosx10.10/release/WiFiScanner-MacOS
+BUILD_PATH=.build/x86_64-apple-macosx10.10/release/WiFiScanner
 NAME=WiFiScanner
 BIN1=/usr/local/bin
 BIN2=/usr/bin

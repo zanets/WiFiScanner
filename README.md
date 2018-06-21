@@ -1,10 +1,10 @@
 # WiFiScanner
 
-![demo](https://raw.githubusercontent.com/darg20127/WiFiScanner-MacOS/master/Demo/demo.jpeg)
+![demo](https://raw.githubusercontent.com/darg20127/WiFiScanner/master/Demo/demo.jpeg)
 
 ### USAGE
 ```
-Usage: WiFiScanner-MacOS [OPTION]
+Usage: WiFiScanner [OPTION]
 Scan wireless networks and view WLAN SSID, BSSID, PHY Mode, Channel, Channel Band, Bandwidth, RSSI, Noise and Security
 
 --help, -h            This usage
