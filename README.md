@@ -1,6 +1,6 @@
 # WiFiScanner
 
-![demo](https://raw.githubusercontent.com/darg20127/WiFiScanner/master/Demo/demo.jpeg)
+![demo](https://raw.githubusercontent.com/Zanets/WiFiScanner/master/Demo/demo.jpeg)
 
 ### USAGE
 ```
