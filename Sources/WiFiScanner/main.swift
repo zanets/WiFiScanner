@@ -16,6 +16,7 @@ var updateInterval = Sets.updateInterval
 var updateTimes = Sets.updateTimes
 var ssid: String? = Sets.findSSID
 var fssid: String? = Sets.findFSSID
+var band: Int = Sets.findBand
 
 if ( updateInterval == ARGUMENT_NOT_SET_INT ) {
 #if DEBUG
@@ -52,6 +53,11 @@ while updateTimes > 0 {
 		for wifi in wifis {
 			if fssid != nil && wifi.ssid.range(of: fssid!) == nil {
 				continue
+			}
+			if band != ARGUMENT_NOT_SET_INT {
+				if (band == 24 && wifi.channel_band != "2.4GHz") || (band == 5 && wifi.channel_band != "5GHz") {
+					continue
+				}
 			}
 			table.addRow(values: [
 				wifi.ssid,

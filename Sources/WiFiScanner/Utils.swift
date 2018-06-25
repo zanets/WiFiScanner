@@ -11,6 +11,7 @@ struct Settings {
 	var sortOrder: String = ""
 	var findSSID: String? = nil
 	var findFSSID: String? = nil
+	var findBand: Int = ARGUMENT_NOT_SET_INT
 }
 
 func getopt_long (argus: [String]) -> [(name: String, value: String)] {
@@ -82,6 +83,13 @@ func getSettings ( argus: [(name: String, value: String)] ) -> Settings{
 				exit(-1)
 			}
 			Sets.findFSSID = input
+		} else if argu.name == "band" {
+			let input = Int(argu.value) ?? ARGUMENT_NOT_SET_INT
+			guard input == 24 || input == 5 else {
+				print("Arguments error: band require input ether 24 or 5 but get \(argu.value)")
+				exit(-1)
+			}
+			Sets.findBand = input
 		} else if argu.name == "help" || argu.name == "h" {
 			usage()
 			exit(0)
@@ -99,6 +107,7 @@ func usage() {
 	print("--updateTimes=NUM     Process will scan NUM times")
 	print("--ssid=NAME           Process will try to find wifi whose SSID is NAME")
 	print("--fssid=NAME          Porcess will try to find wifi that contains NAME in their SSID.")
+	print("--band=[24|5]         Porcess will try to find 2.4G or 5G.")
 	print("\nAbout updateInterval and updateTimes:")
 	print("If updateInterval is not given, process run once.")
 	print("If updateInterval is given but updateTimes is not, process run forever.")
